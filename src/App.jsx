@@ -4,14 +4,16 @@ import { BrowserRouter as Router , Routes, Route, Link } from "react-router-dom"
 import EditPost from "./components/post/edit.component";
 import PostList from "./components/post/list.component";
 import CreatePost from "./components/post/create.component";
+import Navigation from "./components/navigation.component";
 
 function App() {
 
   return (
     <Router>
-        <Link to={"/"} className="text-white navbar-brand">
+        {/* <Link to={"/"} className="text-white navbar-brand bg-black">
           영진전문대 성능좋은 게시판 "영게"
-        </Link>
+        </Link> */}
+        <Navigation />
         <Routes>
           <Route exact path='/' element={<PostList />} />
           <Route path="/post/create" element={<CreatePost />} />

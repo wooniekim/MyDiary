@@ -52,16 +52,9 @@ export default function List() {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-12">
-          <div className="card card-body">
-            <div className="table-responsive"></div>
-          </div>
-        </div>
-      </div>
-      <div className="md:px-32 py-8 w-full">
-        <div className="shadow overflow-hidden rounded border-b border-gray-200">
-          <table className="min-w-full bg-white">
+      <div className="w-screen">
+        <div className="shadow overflow-hidden border-b border-gray-200">
+          <table className="w-full bg-white">
             <thead className="bg-gray-800 text-white">
               <tr>
                 <th className="w-1/3 text-center py-3 px-4 uppercase font-semibold text-sm">
@@ -76,23 +69,20 @@ export default function List() {
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              <tbody>
                 {posts.length > 0 &&
                   posts.map((row, key) => (
                     <tr key={key} className="transition duration-300 ease-in-out bg-white border-b hover:bg-gray-100">
-                      <td className="w-1/3 text-left py-3 px-4">{row.title}</td>
-                      <td className="w-1/3 text-left py-3 px-4">
-                        {row.description}
-                      </td>
-                      <td className="w-1/3">
+                      <td className="w-1/3 text-center py-3 px-4">{row.title}</td>
+                      <td className="w-1/3 text-center py-3 px-4">{row.description}</td>
+                      <td className="w-1/3 text-center">
                         <Link
                           to={`/post/edit/${row.id}`}
-                          className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
+                          className="px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
                         >
                           수정
                         </Link>
                         <button
-                          className="flex items-center justify-center w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-red-600 rounded-lg shadow-md hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
+                          className="items-center px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-red-600 rounded-lg shadow-md hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
                           onClick={() => deletePost(row.id)}
                         >
                           삭제
@@ -100,7 +90,6 @@ export default function List() {
                       </td>
                     </tr>
                   ))}
-              </tbody>
             </tbody>
           </table>
         </div>
