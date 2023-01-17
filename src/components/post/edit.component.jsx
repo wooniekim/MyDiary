@@ -77,20 +77,20 @@ export default function UpdatePost() {
   return (
     <div className="container">
       <h1 className="text-5xl font-bold text-blue-300">글 수정</h1>
-      <div class="w-full max-w-2xl">
+      <div className="w-full max-w-2xl">
         <form
-          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={updatePost}
         >
-          <div class="mb-4">
+          <div className="mb-4">
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-bold mb-2"
               for="title"
             >
               제목
             </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="title"
               type="text"
               value={title}
@@ -100,15 +100,15 @@ export default function UpdatePost() {
               }}
             />
           </div>
-          <div class="mb-6">
+          <div className="mb-6">
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-bold mb-2"
               for="description"
             >
               글
             </label>
             <input
-              class="shadow appearance-none border rounded w-full h-52 py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full h-52 py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="description"
               type="text"
               value={description}
@@ -119,18 +119,18 @@ export default function UpdatePost() {
             />
           </div>
           <div className="mt-3 mb-5">
-            <label class="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               사진
             </label>
             <input
               type="file"
               onChange={changeHandler}
-              class="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-bold mb-2"
             ></input>
           </div>
-          <div class="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               글 수정

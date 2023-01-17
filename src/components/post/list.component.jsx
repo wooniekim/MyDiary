@@ -59,32 +59,32 @@ export default function List() {
           </div>
         </div>
       </div>
-      <div class="md:px-32 py-8 w-full">
-        <div class="shadow overflow-hidden rounded border-b border-gray-200">
-          <table class="min-w-full bg-white">
-            <thead class="bg-gray-800 text-white">
+      <div className="md:px-32 py-8 w-full">
+        <div className="shadow overflow-hidden rounded border-b border-gray-200">
+          <table className="min-w-full bg-white">
+            <thead className="bg-gray-800 text-white">
               <tr>
-                <th class="w-1/3 text-center py-3 px-4 uppercase font-semibold text-sm">
+                <th className="w-1/3 text-center py-3 px-4 uppercase font-semibold text-sm">
                   제목
                 </th>
-                <th class="w-1/3 text-center py-3 px-4 uppercase font-semibold text-sm">
+                <th className="w-1/3 text-center py-3 px-4 uppercase font-semibold text-sm">
                   내용
                 </th>
-                <th class="w-1/3 text-center py-3 px-4 uppercase font-semibold text-sm">
+                <th className="w-1/3 text-center py-3 px-4 uppercase font-semibold text-sm">
                   수정 / 삭제
                 </th>
               </tr>
             </thead>
-            <tbody class="text-gray-700">
+            <tbody className="text-gray-700">
               <tbody>
                 {posts.length > 0 &&
                   posts.map((row, key) => (
                     <tr key={key} className="transition duration-300 ease-in-out bg-white border-b hover:bg-gray-100">
-                      <td class="w-1/3 text-left py-3 px-4">{row.title}</td>
-                      <td class="w-1/3 text-left py-3 px-4">
+                      <td className="w-1/3 text-left py-3 px-4">{row.title}</td>
+                      <td className="w-1/3 text-left py-3 px-4">
                         {row.description}
                       </td>
-                      <td class="w-1/3">
+                      <td className="w-1/3">
                         <Link
                           to={`/post/edit/${row.id}`}
                           className="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
