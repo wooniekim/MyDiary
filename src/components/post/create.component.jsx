@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+// import db from "../../firebase-config.js";
+import { collection, addDoc } from "firebase/firestore";
 
 export default function CreatePost() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState();
+  // const [image, setImage] = useState();
   //   const [validationError, setValidationError] = useState("");
 
   const changeHandler = (e) => {
@@ -17,37 +19,16 @@ export default function CreatePost() {
 
   const createPost = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-
-    // 전송할 데이터를 담은 객체
-    formData.append("title", title);
-    console.log(title);
-    formData.append("description", description);
-    console.log(description);
-    formData.append("image", image);
-
-    await axios
-      .post(`http://localhost/api/posts`, formData) // 백의 해당 주소에 formData를 전송
-      .then(({ data }) => {
-        Swal.fire({
-          // 성공 메세지 전송
-          icon: "success",
-          text: data.message,
-        });
-        navigate("/"); // 글 작성 후에는 메인으로 이동
-      })
-      .catch(({ response }) => {
-        // 에러가 났을 경우
-        if (response.status === 422) {
-          //   setValidationError(response.data.errors);
-        } else {
-          Swal.fire({
-            text: response.data.message,
-            icon: "error",
-          });
-        }
+    try {
+      const docRef = await addDoc(collection(db, "posts"), {
+        title: title,
+        content: description,
+        image: image,
       });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
   return (
     <div className="container">
@@ -58,10 +39,7 @@ export default function CreatePost() {
           onSubmit={createPost}
         >
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              for="title"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               제목
             </label>
             <input
@@ -75,10 +53,7 @@ export default function CreatePost() {
             />
           </div>
           <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              for="description"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               글
             </label>
             <input
@@ -92,7 +67,7 @@ export default function CreatePost() {
               }}
             />
           </div>
-          <div classNameName="mt-3 mb-5">
+          {/* <div classNameName="mt-3 mb-5">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               사진
             </label>
@@ -101,7 +76,7 @@ export default function CreatePost() {
               onChange={changeHandler}
               className="block text-gray-700 text-sm font-bold mb-2"
             ></input>
-          </div>
+          </div> */}
           <div className="flex items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
