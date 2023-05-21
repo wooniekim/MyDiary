@@ -12,6 +12,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
+import BoardWrite from "./components/BoardWrite";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -19,8 +21,6 @@ function App() {
 
   // changed를 true로 바꿔주면 되지않을까?
   const [changed, setChanged] = useState(false);
-
-  console.log(title, content);
 
   // 이따가 users 추가하고 삭제하는거 진행을 도와줄 state
   const [posts, setPosts] = useState([]);
@@ -49,7 +49,7 @@ function App() {
   // 생성 - C
   const createPosts = async () => {
     // addDoc을 이용해서 내가 원하는 collection에 내가 원하는 key로 값을 추가한다.
-    await addDoc(postsCollectionRef, { name: newName, age: Number(newAge) });
+    await addDoc(postsCollectionRef, { title: title, content: content });
     // 화면 업데이트를 위한 state 변경
     setChanged(true);
   };
@@ -100,24 +100,28 @@ function App() {
     </div>
   ));
   return (
-    <div className="App">
-      {/* onchange를 이용해서, 변하는 값을 state로 저장한다. */}
-      <input
-        type="text"
-        placeholder="name..."
-        onChange={(event) => {
-          setNewName(event.target.value);
-        }}
-      />
-      <input
-        type="number"
-        placeholder="age..."
-        onChange={(event) => {
-          setNewAge(event.target.value);
-        }}
-      />
-      <button onClick={createPosts}>Create Post</button>
-      {showPosts}
+    <div class="h-100%">
+      <div>
+        {/* onchange를 이용해서, 변하는 값을 state로 저장한다. */}
+        <input
+          type="text"
+          placeholder="name..."
+          onChange={(event) => {
+            setTitle(event.target.value);
+          }}
+        />
+        <input
+          type="text"
+          placeholder="age..."
+          onChange={(event) => {
+            setContent(event.target.value);
+          }}
+        />
+        <button onClick={createPosts}>Create Post</button>
+        {showPosts}
+        <BoardWrite />
+        <NavBar />
+      </div>
     </div>
   );
 }
