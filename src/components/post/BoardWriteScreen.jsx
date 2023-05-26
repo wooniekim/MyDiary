@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "../App.css";
+
+// db에 데이터에 접근을 도와줄 친구들
+import { addDoc } from "firebase/firestore";
 
 const modules = {
   toolbar: [
@@ -46,7 +48,17 @@ const formats = [
   "align",
   "code-block",
 ];
-const BoardWrite = () => {
+const BoardWriteScreen = () => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  // Create
+  const createPosts = async () => {
+    // addDoc을 이용해서 내가 원하는 collection에 내가 원하는 key로 값을 추가한다.
+    await addDoc(postsCollectionRef, { title: title, content: content });
+    // 화면 업데이트를 위한 state 변경
+    setChanged(true);
+  };
+
   const [state, setState] = useState({ text: "" });
   const handleChange = (value) => {
     setState({ text: value });
@@ -59,10 +71,29 @@ const BoardWrite = () => {
         onChange={handleChange}
         modules={modules}
         formats={formats}
-        placeholder={"좋은 캠페인이 되도록 해볼까요?"}
+        placeholder={"글 함 써볼까~"}
       />
+      <div className="h-100%">
+        <div>
+          <input
+            type="text"
+            placeholder="제목"
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
+          />
+          <input
+            type="text"
+            placeholder="글"
+            onChange={(event) => {
+              setContent(event.target.value);
+            }}
+          />
+          <button onClick={createPosts}>글 쓰기</button>
+        </div>
+      </div>
     </>
   );
 };
 
-export default BoardWrite;
+export default BoardWriteScreen;
