@@ -1,109 +1,102 @@
-import { useState, useEffect, useId } from "react";
-import "../App.css";
-// 파이어베이서 파일에서 import 해온 db
-import { db } from "../firebase-config";
-// db에 데이터에 접근을 도와줄 친구들
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
 import { NavLink } from "react-router-dom";
 
 const MainScreen = () => {
-  // changed를 true로 바꿔주면 되지않을까?
-  const [changed, setChanged] = useState(false);
-
-  // 이따가 users 추가하고 삭제하는거 진행을 도와줄 state
-  const [posts, setPosts] = useState([]);
-  // db의 users 컬렉션을 가져옴
-  const postsCollectionRef = collection(db, "posts");
-
-  // 시작될때 한번만 실행 // 읽어오기 - R
-  useEffect(() => {
-    // 비동기로 데이터 받을준비
-    const getPosts = async () => {
-      // getDocs로 컬렉션안에 데이터 가져오기
-      const data = await getDocs(postsCollectionRef);
-      // users에 data안의 자료 추가. 객체에 id 덮어씌우는거
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getPosts();
-    // 뭐든 동작할때마다 changed가 true값으로 변경되니까 화면을 그리고 다시 false로 돌려줘야지 다시 써먹는다.
-    setChanged(false);
-  }, [changed]); // 처음에 한번 그리고, changed가 불릴때마다 화면을 다시 그릴거다
-
-  // 삭제 - D
-  const deletePost = async (id) => {
-    // 내가 삭제하고자 하는 db의 컬렉션의 id를 뒤지면서 데이터를 찾는다
-    const postDoc = doc(db, "posts", id);
-    // deleteDoc을 이용해서 삭제
-    await deleteDoc(postDoc);
-    // 화면 업데이트를 위한 state 변경
-    setChanged(true);
-  };
-
-  // 띄워줄 데이터 key값에 고유ID를 넣어준다.
-  const showPosts = posts.map((value) => (
-    <tr
-      key={value.id}
-      className="bg-white border border-grey-500 md:border-none block md:table-row"
-    >
-      <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-        <span className="inline-block w-1/3 md:hidden font-bold">Name</span>
-        {value.title}
-      </td>
-      <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-        <span className="inline-block w-1/3 md:hidden font-bold">
-          {value.content}
-        </span>
-        {value.content}
-      </td>
-      <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-        <span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
-        <NavLink
-          to={"/board_update"}
-          className="bg-green-400 hover:bg-green-300 text-white font-bold py-1 px-2 mr-1 rounded"
-        >
-          Edit
-        </NavLink>
-        <button
-          onClick={() => {
-            deletePost(value.id);
-          }}
-          className="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ));
   return (
-    <div className="h-100%">
-      <div>
-        {/* 증가버튼은 이 안에 있어야지, 각기 다른 데이터마다 붙는다, users data를 map으로 돌기때문에, 그 안의 id랑 age를 넣어주면 된다.*/}
-        {/* id를 넣어주는 이유는, 우리가 수정하고자 하는 데이터를 찾아야하기 때문에. */}
-        <table className="min-w-full border-collapse block md:table">
-          <thead className="block md:table-header-group">
-            <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-              <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Name
-              </th>
-              <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                User Name
-              </th>
-              <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                수정 / 삭제
-              </th>
-            </tr>
-          </thead>
-          <tbody className="block md:table-row-group">{showPosts}</tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      <section className="bg-white dark:bg-gray-900 min-w-screen min-h-screen">
+        <div className="container px-6 py-10 mx-auto">
+          <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
+            一日
+          </h1>
+          <div>
+            <h1 className="text-white">positive : 80%</h1>
+            <h1 className="text-white">negative : 20%</h1>
+          </div>
+          <div className="grid grid-cols-1 gap-8 mt-4 md:mt-4 md:grid-cols-2">
+            <div className="lg:flex border">
+              <img
+                className="object-cover w-full h-56 rounded-lg lg:w-64"
+                src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                alt=""
+              />
+
+              <div className="flex flex-col justify-between py-6 lg:mx-6">
+                <a
+                  href="#"
+                  className="text-xl font-semibold text-gray-800 hover:underline dark:text-white "
+                >
+                  다른 사람의 일기 보기
+                </a>
+
+                <span className="text-sm text-gray-500 dark:text-gray-300">
+                  On: 20 October 2019
+                </span>
+              </div>
+            </div>
+            <div className="lg:flex border">
+              <img
+                className="object-cover w-full h-56 rounded-lg lg:w-64"
+                src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                alt=""
+              />
+
+              <div className="flex flex-col justify-between py-6 lg:mx-6">
+                <a
+                  href="#"
+                  className="text-xl font-semibold text-gray-800 hover:underline dark:text-white "
+                >
+                  일기 목록
+                </a>
+
+                <span className="text-sm text-gray-500 dark:text-gray-300">
+                  On: 20 October 2019
+                </span>
+              </div>
+            </div>
+            <div className="lg:flex border">
+              <img
+                className="object-cover w-full h-56 rounded-lg lg:w-64"
+                src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                alt=""
+              />
+
+              <div className="flex flex-col justify-between py-6 lg:mx-6">
+                <NavLink
+                  to={"/board_write"}
+                  className="text-xl font-semibold text-gray-800 hover:underline dark:text-white "
+                >
+                  오늘의 일기 쓰기
+                </NavLink>
+
+                <span className="text-sm text-gray-500 dark:text-gray-300">
+                  On: 20 October 2019
+                </span>
+              </div>
+            </div>
+            <div className="lg:flex border">
+              <img
+                className="object-cover w-full h-56 rounded-lg lg:w-64"
+                src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                alt=""
+              />
+
+              <div className="flex flex-col justify-between py-6 lg:mx-6">
+                <a
+                  href="#"
+                  className="text-xl font-semibold text-gray-800 hover:underline dark:text-white "
+                >
+                  마이페이지
+                </a>
+
+                <span className="text-sm text-gray-500 dark:text-gray-300">
+                  On: 20 October 2019
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

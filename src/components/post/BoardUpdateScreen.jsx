@@ -1,4 +1,3 @@
-import "../../App.css";
 // 파이어베이서 파일에서 import 해온 db
 import { db } from "../../firebase-config";
 // db에 데이터에 접근을 도와줄 친구들
@@ -29,7 +28,7 @@ const BoardUpdateScreen = () => {
         onClick={() => {
           updatePost(value.id, value.age);
         }}
-        class="bg-green-400 hover:bg-green-300 text-white font-bold py-1 px-2 mr-1 rounded"
+        className="bg-green-400 hover:bg-green-300 text-white font-bold py-1 px-2 mr-1 rounded"
       ></button>
     </>
   );
