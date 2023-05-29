@@ -10,7 +10,11 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { NavLink } from "react-router-dom";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+
 const BoardListScreen = () => {
+  const [value, onChange] = useState(new Date());
   // changed를 true로 바꿔주면 되지않을까?
   const [changed, setChanged] = useState(false);
 
@@ -100,6 +104,9 @@ const BoardListScreen = () => {
           </thead>
           <tbody className="block md:table-row-group">{showPosts}</tbody>
         </table>
+      </div>
+      <div>
+        <Calendar onChange={onChange} value={value} />
       </div>
     </div>
   );
