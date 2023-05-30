@@ -85,35 +85,53 @@ const BoardListScreen = () => {
     </tr>
   ));
   return (
-    <div className="h-100%">
-      <div>
-        {/* 증가버튼은 이 안에 있어야지, 각기 다른 데이터마다 붙는다, users data를 map으로 돌기때문에, 그 안의 id랑 age를 넣어주면 된다.*/}
-        {/* id를 넣어주는 이유는, 우리가 수정하고자 하는 데이터를 찾아야하기 때문에. */}
-        <table className="min-w-full border-collapse block md:table">
-          <thead className="block md:table-header-group">
-            <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-              <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                Name
-              </th>
-              <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                User Name
-              </th>
-              <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                수정 / 삭제
-              </th>
-            </tr>
-          </thead>
-          <tbody className="block md:table-row-group">{showPosts}</tbody>
-        </table>
+    <>
+      <div className="h-100%">
+        <div>
+          {/* 증가버튼은 이 안에 있어야지, 각기 다른 데이터마다 붙는다, users data를 map으로 돌기때문에, 그 안의 id랑 age를 넣어주면 된다.*/}
+          {/* id를 넣어주는 이유는, 우리가 수정하고자 하는 데이터를 찾아야하기 때문에. */}
+          <table className="min-w-full border-collapse block md:table">
+            <thead className="block md:table-header-group">
+              <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  Name
+                </th>
+                <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  User Name
+                </th>
+                <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  수정 / 삭제
+                </th>
+              </tr>
+            </thead>
+            <tbody className="block md:table-row-group">{showPosts}</tbody>
+          </table>
+        </div>
+        <div className="flex flex-row">
+          <div>
+            <Calendar
+              locale="en"
+              formatDay={(locale, date) => moment(date).format("DD")}
+              onChange={onChange}
+              value={value}
+              showNeighboringMonth={false}
+            />
+          </div>
+          <section className="w-1/3 p-4 mx-auto bg-white border border-gray-200 rounded-2xl">
+            <h2 className="font-semibold text-gray-800">🍪 제목</h2>
+            <p className="mt-3 text-sm text-gray-600">내용</p>
+            <div className="grid grid-cols-2 gap-4 mt-4 shrink-0">
+              <button className=" text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+                수정
+              </button>
+              <button className=" text-xs border text-gray-800 hover:bg-gray-100 font-medium rounded-lg px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+                삭제
+              </button>
+            </div>
+          </section>
+        </div>
       </div>
-      <div>
-        <Calendar
-          formatDay={(locale, date) => moment(date).format("DD")}
-          onChange={onChange}
-          value={value}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 export default BoardListScreen;
