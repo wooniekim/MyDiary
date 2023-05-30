@@ -10,49 +10,6 @@ import { db } from "../../firebase-config";
 import { collection } from "firebase/firestore";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const modules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
-    [{ size: [] }],
-    [{ color: [] }, { background: [] }],
-
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [{ align: [] }],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image", "video"],
-    ["code-block"],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-};
-
-const formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "color",
-  "background",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
-  "align",
-  "code-block",
-];
 const BoardWriteScreen = () => {
   const navigate = useNavigate();
   // db의 users 컬렉션을 가져옴
@@ -74,13 +31,6 @@ const BoardWriteScreen = () => {
 
   return (
     <>
-      <ReactQuill
-        value={state.text}
-        onChange={handleChange}
-        modules={modules}
-        formats={formats}
-        placeholder={"글 함 써볼까~"}
-      />
       <div className="h-100%">
         <div>
           <input
