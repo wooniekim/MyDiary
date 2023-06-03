@@ -11,17 +11,15 @@ const NavBar = () => {
               to={"/"}
               className="transition px-4 grid place-items-center hover:scale-110 hover:-translate-y-1"
             >
-              <FaHome className="text-orange-500 mb-1 text-xl" />
-              <h1 className="text-sm text-orange-500 decoration-red-300">
-                Home
-              </h1>
+              <FaHome className="text-red-300 mb-1 text-xl" />
+              <h1 className="text-sm text-red-300 decoration-red-300">Home</h1>
             </NavLink>
             <NavLink
               to={"/board_list"}
               className="transition px-4 grid place-items-center hover:scale-110 hover:-translate-y-1"
             >
-              <FaClipboardList className="text-orange-500 mb-1 text-xl" />
-              <span className="text-sm text-orange-500 decoration-red-300">
+              <FaClipboardList className="text-red-300 mb-1 text-xl" />
+              <span className="text-sm text-red-300 decoration-red-300">
                 List
               </span>
             </NavLink>
@@ -29,8 +27,8 @@ const NavBar = () => {
               to={"/board_write"}
               className="transition px-4 grid place-items-center hover:scale-110 hover:-translate-y-1"
             >
-              <FaPen className="text-orange-500 mb-1 text-xl" />
-              <span className="text-sm text-orange-500 decoration-red-300">
+              <FaPen className="text-red-300 mb-1 text-xl" />
+              <span className="text-sm text-red-300 decoration-red-300">
                 Write
               </span>
             </NavLink>
@@ -38,8 +36,8 @@ const NavBar = () => {
               to={"/board_update"}
               className="transition px-4 grid place-items-center hover:scale-110 hover:-translate-y-1"
             >
-              <FaUser className="text-orange-500 mb-1 text-xl" />
-              <span className="text-sm text-orange-500 decoration-red-300">
+              <FaUser className="text-red-300 mb-1 text-xl" />
+              <span className="text-sm text-red-300 decoration-red-300">
                 MyPage
               </span>
             </NavLink>

@@ -49,6 +49,7 @@ const BoardListScreen = () => {
     setChanged(true);
   };
 
+  console.log(posts);
   // 띄워줄 데이터 key값에 고유ID를 넣어준다.
   const showPosts = posts.map((value) => (
     <tr
@@ -64,6 +65,12 @@ const BoardListScreen = () => {
           {value.content}
         </span>
         {value.content}
+      </td>
+      <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+        <span className="inline-block w-1/3 md:hidden font-bold">
+          {String(value.createAt.toDate())}
+        </span>
+        {String(value.createAt.toDate())}
       </td>
       <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
         <span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
@@ -94,10 +101,13 @@ const BoardListScreen = () => {
             <thead className="block md:table-header-group">
               <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
                 <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                  Name
+                  제목
                 </th>
                 <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                  User Name
+                  글
+                </th>
+                <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                  날짜
                 </th>
                 <th className="bg-red-300 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                   수정 / 삭제
