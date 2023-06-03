@@ -1,4 +1,4 @@
-import { useState, useEffect, useId } from "react";
+import { useState, useEffect } from "react";
 // 파이어베이서 파일에서 import 해온 db
 import { db } from "../../firebase-config";
 // db에 데이터에 접근을 도와줄 친구들
@@ -16,41 +16,25 @@ import moment from "moment";
 
 const BoardListScreen = () => {
   const [value, onChange] = useState(new Date());
-  // changed를 true로 바꿔주면 되지않을까?
-  const [changed, setChanged] = useState(false);
-
-  // 이따가 users 추가하고 삭제하는거 진행을 도와줄 state
   const [posts, setPosts] = useState([]);
-  // db의 users 컬렉션을 가져옴
   const postsCollectionRef = collection(db, "posts");
 
-  // 시작될때 한번만 실행 // 읽어오기 - R
   useEffect(() => {
-    // 비동기로 데이터 받을준비
-    const getPosts = async () => {
-      // getDocs로 컬렉션안에 데이터 가져오기
-      const data = await getDocs(postsCollectionRef);
-      // users에 data안의 자료 추가. 객체에 id 덮어씌우는거
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
     getPosts();
-    // 뭐든 동작할때마다 changed가 true값으로 변경되니까 화면을 그리고 다시 false로 돌려줘야지 다시 써먹는다.
-    setChanged(false);
-  }, [changed]); // 처음에 한번 그리고, changed가 불릴때마다 화면을 다시 그릴거다
+  });
 
-  // 삭제 - D
-  const deletePost = async (id) => {
-    // 내가 삭제하고자 하는 db의 컬렉션의 id를 뒤지면서 데이터를 찾는다
-    const postDoc = doc(db, "posts", id);
-    // deleteDoc을 이용해서 삭제
-    await deleteDoc(postDoc);
-    // 화면 업데이트를 위한 state 변경
-    setChanged(true);
+  const [isWriteOpen, setIsWriteOpen] = useState(false);
+
+  const getPosts = async () => {
+    const data = await getDocs(postsCollectionRef);
+    setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-  console.log(posts);
-  // 띄워줄 데이터 key값에 고유ID를 넣어준다.
+  // 삭제
+  const deletePost = async (id) => {
+    const postDoc = doc(db, "posts", id);
+    await deleteDoc(postDoc);
+  };
   const showPosts = posts.map((value) => (
     <tr
       key={value.id}
@@ -95,8 +79,6 @@ const BoardListScreen = () => {
     <>
       <div className="h-100%">
         <div>
-          {/* 증가버튼은 이 안에 있어야지, 각기 다른 데이터마다 붙는다, users data를 map으로 돌기때문에, 그 안의 id랑 age를 넣어주면 된다.*/}
-          {/* id를 넣어주는 이유는, 우리가 수정하고자 하는 데이터를 찾아야하기 때문에. */}
           <table className="min-w-full border-collapse block md:table">
             <thead className="block md:table-header-group">
               <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
@@ -117,8 +99,9 @@ const BoardListScreen = () => {
             <tbody className="block md:table-row-group">{showPosts}</tbody>
           </table>
         </div>
-        <div className="flex flex-row">
-          <div>
+        {/* 캘린더랑 글쓰기 폼 담고있는 div */}
+        <div className="grid grid-cols-2 mt-6">
+          <div className="grid place-items-center ml-6">
             <Calendar
               locale="en"
               formatDay={(locale, date) => moment(date).format("DD")}
@@ -126,19 +109,81 @@ const BoardListScreen = () => {
               value={value}
               showNeighboringMonth={false}
             />
+            <button
+              onClick={() => setIsWriteOpen(!isWriteOpen)}
+              className="text-xs bg-red-300 font-medium rounded-lg hover:bg-red-200 text-white px-4 py-2.5"
+            >
+              일기쓰기
+            </button>
           </div>
-          <section className="w-1/3 p-4 mx-auto bg-white border border-gray-200 rounded-2xl">
-            <h2 className="font-semibold text-gray-800">🍪 제목</h2>
-            <p className="mt-3 text-sm text-gray-600">내용</p>
-            <div className="grid grid-cols-2 gap-4 mt-4 shrink-0">
-              <button className="text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
-                수정
-              </button>
-              <button className="text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
-                삭제
-              </button>
+          {isWriteOpen ? (
+            <div className=" w-full flex flex-col justify-center items-center mx-auto">
+              <section className="w-2/3 h-full !p-6 mx-auto bg-white border border-gray-200 rounded-[20px]">
+                <div class="relative flex flex-row justify-between">
+                  <h4 class="text-xl font-bold text-navy-700 mb-1">
+                    ❤️ 2023.05.23 일기 ❤️
+                  </h4>
+                </div>
+                <div className="mb-1">
+                  <h2 className="font-semibold text-gray-800">🍪 제목 🍪</h2>
+                </div>
+                <div>
+                  <p className="mt-3 text-sm text-gray-600">
+                    미안하다 이거 보여주려고 어그로끌었다.. 나루토 사스케
+                    싸움수준 ㄹㅇ실화냐? 진짜 세계관최강자들의 싸움이다..
+                    그찐따같던 나루토가 맞나? 진짜 나루토는 전설이다..진짜옛날에
+                    맨날나루토봘는데 왕같은존재인 호카게 되서 세계최강 전설적인
+                    영웅이된나루토보면 진짜내가다 감격스럽고 나루토 노래부터
+                    명장면까지 가슴울리는장면들이 뇌리에 스치면서 가슴이
+                    웅장해진다.. 그리고 극장판 에 카카시앞에 운석날라오는 거대한
+                    걸 사스케가 갑자기 순식간에 나타나서 부숴버리곤 개간지나게
+                    나루토가 없다면..
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mt-4 shrink-0">
+                  <button className="text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+                    수정
+                  </button>
+                  <button className="text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+                    삭제
+                  </button>
+                </div>
+              </section>
             </div>
-          </section>
+          ) : (
+            <div className="w-full flex flex-col justify-center items-center mx-auto">
+              <div className="flex flex-col rounded-[20px] w-2/3 bg-white bg-clip-border shadow-3xl shadow-shadow-500 !p-4 undefined border border-gray-200">
+                <div class="relative flex flex-row justify-between">
+                  <h4 class="text-xl font-bold text-navy-700 mb-1">
+                    ❤️ 일기 쓰기 ❤️
+                  </h4>
+                </div>
+                <div className="mb-1">
+                  <label className="text-sm text-navy-700 font-bold">
+                    제목
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="제목을 입력해주세요"
+                    className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200"
+                  />
+                </div>
+                <div className="mb-1">
+                  <label className="text-sm text-navy-700 font-bold">
+                    내용
+                  </label>
+                  <textarea
+                    type="text"
+                    placeholder="내용을 입력해주세요"
+                    className="mt-2 flex py-16 w-full items-center justify-center rounded-xl border bg-white/0 text-sm outline-none border-gray-200"
+                  />
+                </div>
+                <button className="bg-red-300 text-white p-3 rounded-xl">
+                  글 쓰기
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
