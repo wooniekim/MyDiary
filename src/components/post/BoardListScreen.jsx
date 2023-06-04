@@ -77,7 +77,7 @@ const BoardListScreen = () => {
   ));
   return (
     <>
-      <div className="h-100%">
+      <div className="h-100% mt-6">
         <div>
           <table className="min-w-full border-collapse block md:table">
             <thead className="block md:table-header-group">
@@ -100,6 +100,21 @@ const BoardListScreen = () => {
           </table>
         </div>
         {/* 캘린더랑 글쓰기 폼 담고있는 div */}
+        <div className="ml-6">
+          <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl underline decoration-red-300">
+            一日
+          </h1>
+          <h1>positive : 80%</h1>
+          <h1>negative : 20%</h1>
+          <div className="group relative m-12 flex justify-center">
+            <button className="rounded bg-red-300 px-4 py-2 text-sm text-white shadow-sm">
+              눌러봐
+            </button>
+            <div className="absolute top-10 scale-0 transition-all rounded bg-gray-800 p-2 text-xs text-white group-hover:scale-100">
+              ✨ Fuck you! ✨
+            </div>
+          </div>
+        </div>
         <div className="grid grid-cols-2 mt-6">
           <div className="grid place-items-center ml-6">
             <Calendar
@@ -119,9 +134,9 @@ const BoardListScreen = () => {
           {isWriteOpen ? (
             <div className=" w-full flex flex-col justify-center items-center mx-auto">
               <section className="w-2/3 h-full !p-6 mx-auto bg-white border border-gray-200 rounded-[20px]">
-                <div class="relative flex flex-row justify-between">
-                  <h4 class="text-xl font-bold text-navy-700 mb-1">
-                    ❤️ 2023.05.23 일기 ❤️
+                <div className="relative flex flex-row justify-between">
+                  <h4 className="text-xl font-bold text-navy-700 mb-1 underline decoration-red-300">
+                    {moment(value).format("YYYY년 MM월 DD일")} 일기
                   </h4>
                 </div>
                 <div className="mb-1">
@@ -153,9 +168,9 @@ const BoardListScreen = () => {
           ) : (
             <div className="w-full flex flex-col justify-center items-center mx-auto">
               <div className="flex flex-col rounded-[20px] w-2/3 bg-white bg-clip-border shadow-3xl shadow-shadow-500 !p-4 undefined border border-gray-200">
-                <div class="relative flex flex-row justify-between">
-                  <h4 class="text-xl font-bold text-navy-700 mb-1">
-                    ❤️ 일기 쓰기 ❤️
+                <div className="relative flex flex-row justify-between">
+                  <h4 className="text-xl font-bold text-navy-700 mb-1 underline decoration-red-300">
+                    일기 쓰기
                   </h4>
                 </div>
                 <div className="mb-1">
@@ -174,7 +189,7 @@ const BoardListScreen = () => {
                   </label>
                   <textarea
                     type="text"
-                    placeholder="내용을 입력해주세요"
+                    placeholder="   당신의 하루를 기록해주세요"
                     className="mt-2 flex py-16 w-full items-center justify-center rounded-xl border bg-white/0 text-sm outline-none border-gray-200"
                   />
                 </div>

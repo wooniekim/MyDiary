@@ -5,13 +5,6 @@ const MainScreen = () => {
     <>
       <section className="bg-white min-w-screen h-screen">
         <div className="container px-6 py-10 mx-auto">
-          <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl">
-            一日
-          </h1>
-          <div>
-            <h1>positive : 80%</h1>
-            <h1>negative : 20%</h1>
-          </div>
           <div className="grid grid-cols-1 gap-8 mt-4 md:mt-4 md:grid-cols-2 border">
             <div className="lg:flex">
               <img
